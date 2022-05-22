@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe "user dashboard" do
 
   before :each do
-    @user_1 = User.create!(name: "Twitch", email: "twitch@dogmail.com")
+    @user_1 = User.create!(name: "Twitch", email: "twitch@dogmail.com", password: "password", password_confirmation: "password")
   end
 
   it "has a button to discover movies" do

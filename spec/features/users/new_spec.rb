@@ -16,6 +16,8 @@ RSpec.describe 'New User Registration Page Features' do
       visit '/register/'
       fill_in :email, with: "johndoe@gmail.com"
       fill_in :name, with: "John Doe"
+      fill_in "Password", with: "password"
+      fill_in "Password Confirmation", with: "password"
       click_on "Submit"
       expect(current_path =~ /\/users\/\d+\/$/).to eq(0) #reg ex will match any integer, we don't care that we're going to a specific ID number just that the page we end up on will have matching information. Refactor opportunity - how do we predict the next sequential database ID? User model method for that?
     end
@@ -24,6 +26,8 @@ RSpec.describe 'New User Registration Page Features' do
       visit '/register/'
       fill_in :email, with: "johndoe@gmail.com"
       fill_in :name, with: "John Doe"
+      fill_in "Password", with: "password"
+      fill_in "Password Confirmation", with: "password"
       click_on "Submit"
     end
   end

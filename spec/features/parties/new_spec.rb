@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe "new viewing party page" do
   it "has the name of the movie and form to create new party" do
     json_response = File.read("./spec/fixtures/shawshank.json")
-    user_1 = User.create!(name: "Twitch", email: "twitch@dogmail.com")
+    user_1 = User.create!(name: "Twitch", email: "twitch@dogmail.com", password: "password", password_confirmation: "password")
     stub_request(:get, "https://api.themoviedb.org/3/movie/278?api_key=131d23d3e9d511ff6fce6fdc6799d9be&append_to_response=credits,reviews").
          with(
            headers: {
@@ -22,8 +22,8 @@ RSpec.describe "new viewing party page" do
 
   it "can create new parties" do
     json_response = File.read("./spec/fixtures/shawshank.json")
-    user_1 = User.create!(name: "Twitch", email: "twitch@dogmail.com")
-    user_2 = User.create!(name: "Carl", email: "carl@catmail.com")
+    user_1 = User.create!(name: "Twitch", email: "twitch@dogmail.com", password: "password", password_confirmation: "password")
+    user_2 = User.create!(name: "Carl", email: "carl@catmail.com", password: "password", password_confirmation: "password")
     stub_request(:get, "https://api.themoviedb.org/3/movie/278?api_key=131d23d3e9d511ff6fce6fdc6799d9be&append_to_response=credits,reviews").
          with(
            headers: {
