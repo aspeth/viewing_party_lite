@@ -43,4 +43,37 @@ RSpec.describe "landing page" do
 
     expect(page).to have_link("Landing Page")
   end
+
+  it "happy path - log in" do
+    user_1 = User.create!(name: "Twitch", email: "twitch@dogmail.com", password: "password", password_confirmation: "password")
+    visit "/"
+
+    click_link "Log In"
+
+    expect(current_path).to eq("/login")
+
+    fill_in "Email", with: user_1.email
+    fill_in "Password", with: user_1.password
+    fill_in "Password Confirmation", with: user_1.password_confirmation
+    click_button "Log In"
+
+    expect(current_path).to eq("/users/#{user_1.id}")
+  end
+
+  it "sad path - log in" do
+    user_1 = User.create!(name: "Twitch", email: "twitch@dogmail.com", password: "password", password_confirmation: "password")
+    visit "/"
+
+    click_link "Log In"
+
+    expect(current_path).to eq("/login")
+
+    fill_in "Email", with: user_1.email
+    fill_in "Password", with: "Notmypassword"
+    fill_in "Password Confirmation", with: "Notmypassword"
+    click_button "Log In"
+
+    expect(current_path).to eq("/login")
+    expect(page).to have_content("Incorrect Credentials")
+  end
 end

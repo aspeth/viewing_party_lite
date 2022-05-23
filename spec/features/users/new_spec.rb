@@ -30,6 +30,42 @@ RSpec.describe 'New User Registration Page Features' do
       fill_in "Password Confirmation", with: "password"
       click_on "Submit"
     end
+    
+    it "sad path - missing name" do
+      visit '/register'
+      fill_in :email, with: "johndoe@gmail.com"
+      #missing name
+      fill_in "Password", with: "password"
+      fill_in "Password Confirmation", with: "password"
+      click_on "Submit"
+      
+      expect(current_path).to eq("/register")
+      expect(page).to have_content("Missing Credentials")
+    end
+
+    it "sad path - missing email" do
+      visit '/register'
+      #missing email
+      fill_in :name, with: "name"
+      fill_in "Password", with: "password"
+      fill_in "Password Confirmation", with: "password"
+      click_on "Submit"
+      
+      expect(current_path).to eq("/register")
+      expect(page).to have_content("Missing Credentials")
+    end
+
+    it "sad path - passwords don't match" do
+      visit '/register'
+      fill_in :email, with: "hello@hello.com"
+      fill_in :name, with: "name"
+      fill_in "Password", with: "password"
+      fill_in "Password Confirmation", with: "123"
+      click_on "Submit"
+      
+      expect(current_path).to eq("/register")
+      expect(page).to have_content("Missing Credentials")
+    end
   end
 
 end
