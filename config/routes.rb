@@ -1,6 +1,9 @@
 Rails.application.routes.draw do
   get '/', to: 'landing_page#index'
 
+  get '/login', to: 'users#login_form'
+  post '/login', to: 'users#login'
+
   get '/register', to: 'users#new'
 
   post '/users', to: 'users#create'
