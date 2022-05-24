@@ -1,4 +1,6 @@
 class UsersController < ApplicationController
+  before_action :current_user
+  
   def new
 
   end
@@ -10,13 +12,15 @@ class UsersController < ApplicationController
     else      
       user = user_params
       user[:email] = user[:email].downcase
+      session[:user_id] = user.id
       new_user = User.create!(user)
       redirect_to "/users/#{new_user.id}/"
     end
   end
 
   def show
-    @user = User.find(params[:id])
+    
+    # @user = User.find(params[:id])
   end
 
   def login_form
