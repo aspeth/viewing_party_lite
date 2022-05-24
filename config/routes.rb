@@ -16,4 +16,8 @@ Rails.application.routes.draw do
   get '/discover', to: 'movies#index'
   post '/movies/:id/viewing-party', to: 'parties#create'
 
+  namespace :admin do
+    get '/dashboard', to: 'dashboard#index'
+    get 'users/:id', to: 'dashboard#show'
+  end
 end

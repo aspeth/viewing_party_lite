@@ -6,6 +6,8 @@ class User < ApplicationRecord
   validates_presence_of :password_digest
   validates :email, uniqueness: true, presence: true
 
+  enum role: %w(default manager admin)
+
   has_secure_password
 
   def parties_im_hosting

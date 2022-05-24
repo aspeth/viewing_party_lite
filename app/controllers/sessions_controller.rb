@@ -6,10 +6,16 @@ class SessionsController < ApplicationController
   
   def create
     user = User.find_by(email: user_params[:email])
-    if user.authenticate(params[:password])
+    if user && user.authenticate(params[:password])
       session[:user_id] = user.id
       flash[:success] = "Welcome, #{user.name}!"
-      redirect_to "/dashboard"
+      if user.admin?
+        redirect_to "/admin/dashboard"
+      elsif user.manager?
+        redirect_to "/manager/dashboard"
+      elsif user.default?
+        redirect_to "/dashboard"
+      end
     else
       flash[:error] = "Incorrect Credentials"
       render :new
