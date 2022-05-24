@@ -93,8 +93,28 @@ RSpec.describe "landing page" do
     user_1 = User.create!(name: "Twitch", email: "twitch@dogmail.com", password: "password", password_confirmation: "password")
     user_2 = User.create!(name: "Carl", email: "carl@catmail.com", password: "password", password_confirmation: "password")
     visit '/'
-
+    
     expect(page).to_not have_content("Twitch")
     expect(page).to_not have_content("Carl")
+  end
+  
+  it "user names are no longer links to their pages, but now have emails listed" do
+    user_1 = User.create!(name: "Twitch", email: "twitch@dogmail.com", password: "password", password_confirmation: "password")
+    user_2 = User.create!(name: "Carl", email: "carl@catmail.com", password: "password", password_confirmation: "password")
+    visit "/"
+    
+    click_link "Log In"
+    
+    expect(current_path).to eq("/login")
+    
+    fill_in "Email", with: user_1.email
+    fill_in "Password", with: user_1.password
+    fill_in "Password Confirmation", with: user_1.password_confirmation
+    click_button "Log In"
+    
+    visit "/"
+
+    expect(page).to have_content("carl@catmail.com")
+    expect(page).to_not have_link("Carl")
   end
 end
