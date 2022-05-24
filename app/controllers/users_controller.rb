@@ -20,22 +20,6 @@ class UsersController < ApplicationController
   def show
     
   end
-  
-  def login_form
-    
-  end
-  
-  def login
-    user = User.find_by(email: user_params[:email])
-    if user.authenticate(params[:password])
-      session[:user_id] = user.id
-      flash[:success] = "Welcome, #{user.name}!"
-      redirect_to "/dashboard"
-    else
-      flash[:error] = "Incorrect Credentials"
-      render :login_form
-    end
-  end
 
   private
 
