@@ -117,4 +117,12 @@ RSpec.describe "landing page" do
     expect(page).to have_content("carl@catmail.com")
     expect(page).to_not have_link("Carl")
   end
+
+  it "must be logged in to access dashboard" do
+    user_1 = User.create!(name: "Twitch", email: "twitch@dogmail.com", password: "password", password_confirmation: "password")
+    visit "/dashboard"
+
+    expect(current_path).to eq("/")
+    expect(page).to have_content("Please log in to see dashboard")
+  end
 end

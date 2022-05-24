@@ -18,7 +18,10 @@ class UsersController < ApplicationController
   end
   
   def show
-    
+    if current_user.nil?
+      flash[:error] = "Please log in to see dashboard"
+      redirect_to "/"
+    end
   end
 
   private
