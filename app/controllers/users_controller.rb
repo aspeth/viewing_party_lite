@@ -1,6 +1,5 @@
 class UsersController < ApplicationController
-  before_action :current_user
-  
+
   def new
 
   end
@@ -9,30 +8,29 @@ class UsersController < ApplicationController
     if user_params.values.include?("") || user_params[:password] != user_params[:password_confirmation]
       flash[:error] = "Missing Credentials"
       redirect_to register_path
-    else      
+    else
       user = user_params
       user[:email] = user[:email].downcase
-      session[:user_id] = user.id
       new_user = User.create!(user)
-      redirect_to "/users/#{new_user.id}/"
+      session[:user_id] = new_user.id
+      redirect_to "/dashboard"
     end
   end
-
+  
   def show
     
-    # @user = User.find(params[:id])
   end
-
+  
   def login_form
     
   end
-
+  
   def login
     user = User.find_by(email: user_params[:email])
     if user.authenticate(params[:password])
       session[:user_id] = user.id
       flash[:success] = "Welcome, #{user.name}!"
-      redirect_to "/users/#{user.id}"
+      redirect_to "/dashboard"
     else
       flash[:error] = "Incorrect Credentials"
       render :login_form

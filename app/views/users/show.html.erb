@@ -1,11 +1,11 @@
 <div id="user_dashboard_heading">
-<h1> <%= @user.name %> </h1>
+<h1> <%= current_user.name %> </h1>
 </div>
-<%= button_to "Discover Movies", "/users/#{@user.id}/discover", method: :get %>
+<%= button_to "Discover Movies", "/users/#{current_user.id}/discover", method: :get %>
 <h2>My Parties</h2>
-<div id="<%= @user.id %>_viewing_parties">
+<div id="<%= current_user.id %>_viewing_parties">
 <ul>
-<% @user.parties_im_hosting.each do |party| %>
+<% current_user.parties_im_hosting.each do |party| %>
   <li> Save the date: <%= party.date.strftime("%a, %b %e  %Y")%> <!-- REFACTOR - no other details are really required here, but ... would make sense --></li>
 <% end %>
 </ul>

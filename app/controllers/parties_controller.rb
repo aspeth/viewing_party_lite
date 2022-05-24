@@ -11,8 +11,7 @@ class PartiesController < ApplicationController
     params[:invite_users].each do |user_id|
       UserParty.create!(user_id: user_id, party_id: party.id) if user_id != ""
     end
-
-    redirect_to "/users/#{params[:user_id]}"
+    redirect_to "/dashboard"
   end
 
 private

@@ -1,6 +1,20 @@
 require 'rails_helper'
 
 RSpec.describe "landing page" do
+  before do
+    user_1 = User.create!(name: "Twitch", email: "twitch@dogmail.com", password: "password", password_confirmation: "password")
+    visit "/"
+
+    click_link "Log In"
+
+    expect(current_path).to eq("/login")
+
+    fill_in "Email", with: user_1.email
+    fill_in "Password", with: user_1.password
+    fill_in "Password Confirmation", with: user_1.password_confirmation
+    click_button "Log In"
+  end
+
   it "displays the name of the application" do
     visit '/'
 
@@ -20,22 +34,8 @@ RSpec.describe "landing page" do
     fill_in "Password Confirmation", with: "password"
     click_button "Submit"
 
-    expect(current_path).to match(/\/users\/\d+\//)
+    expect(current_path).to match("/dashboard")
     expect(page).to have_content("Carl")
-  end
-
-  it "has a list of existing users that link to their dashboards" do
-    user_1 = User.create!(name: "Twitch", email: "twitch@dogmail.com", password: "password", password_confirmation: "password")
-    user_2 = User.create!(name: "Riley", email: "riley@dogmail.com", password: "password", password_confirmation: "password")
-    user_3 = User.create!(name: "Carl", email: "carl@catmail.com", password: "password", password_confirmation: "password")
-    visit '/'
-
-    expect(page).to have_content("Twitch")
-    expect(page).to have_content("Riley")
-    expect(page).to have_content("Carl")
-
-    click_link "Riley"
-    expect(current_path).to eq("/users/#{user_2.id}")
   end
 
   it "has a link to the landing page" do
@@ -45,7 +45,7 @@ RSpec.describe "landing page" do
   end
 
   it "happy path - log in" do
-    user_1 = User.create!(name: "Twitch", email: "twitch@dogmail.com", password: "password", password_confirmation: "password")
+    user_1 = User.create!(name: "Twitch", email: "twitch_2@dogmail.com", password: "password", password_confirmation: "password")
     visit "/"
 
     click_link "Log In"
@@ -57,11 +57,11 @@ RSpec.describe "landing page" do
     fill_in "Password Confirmation", with: user_1.password_confirmation
     click_button "Log In"
 
-    expect(current_path).to eq("/users/#{user_1.id}")
+    expect(current_path).to eq("/dashboard")
   end
 
   it "sad path - log in" do
-    user_1 = User.create!(name: "Twitch", email: "twitch@dogmail.com", password: "password", password_confirmation: "password")
+    user_1 = User.create!(name: "Twitch", email: "twitch_3@dogmail.com", password: "password", password_confirmation: "password")
     visit "/"
 
     click_link "Log In"
