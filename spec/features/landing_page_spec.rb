@@ -1,20 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe "landing page" do
-  before do
-    user_1 = User.create!(name: "Twitch", email: "twitch@dogmail.com", password: "password", password_confirmation: "password")
-    visit "/"
-
-    click_link "Log In"
-
-    expect(current_path).to eq("/login")
-
-    fill_in "Email", with: user_1.email
-    fill_in "Password", with: user_1.password
-    fill_in "Password Confirmation", with: user_1.password_confirmation
-    click_button "Log In"
-  end
-
   it "displays the name of the application" do
     visit '/'
 
@@ -75,5 +61,31 @@ RSpec.describe "landing page" do
 
     expect(current_path).to eq("/login")
     expect(page).to have_content("Incorrect Credentials")
+  end
+
+  it "log in / log out" do
+    user_1 = User.create!(name: "Twitch", email: "twitch@dogmail.com", password: "password", password_confirmation: "password")
+    visit "/"
+    
+    click_link "Log In"
+    
+    expect(current_path).to eq("/login")
+    
+    fill_in "Email", with: user_1.email
+    fill_in "Password", with: user_1.password
+    fill_in "Password Confirmation", with: user_1.password_confirmation
+    click_button "Log In"
+    
+    visit "/"
+
+    expect(page).to_not have_link("Log In")
+    expect(page).to_not have_button("Create New User")
+    expect(page).to have_link("Log Out")
+    
+    click_link "Log Out"
+    
+    expect(page).to have_link("Log In")
+    expect(page).to have_button("Create New User")
+    expect(page).to_not have_link("Log Out")
   end
 end
