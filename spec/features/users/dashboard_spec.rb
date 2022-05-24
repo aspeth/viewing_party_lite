@@ -20,7 +20,7 @@ RSpec.describe "user dashboard" do
     visit "/dashboard"
     click_button "Discover Movies"
 
-    expect(current_path).to eq("/users/#{@user_1.id}/discover")
+    expect(current_path).to eq("/discover")
   end
 
   it "shows a user's name at the top of the page" do

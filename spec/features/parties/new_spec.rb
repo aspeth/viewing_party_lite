@@ -25,7 +25,7 @@ RSpec.describe "new viewing party page" do
        	  'User-Agent'=>'Faraday v2.3.0'
            }).
          to_return(status: 200, body: json_response, headers: {})
-    visit "/users/#{user_1.id}/movies/278/viewing-party/new"
+    visit "/movies/278/viewing-party/new"
 
     expect(page).to have_field(:duration)
     expect(page).to have_field(:start_time)
@@ -45,7 +45,7 @@ RSpec.describe "new viewing party page" do
        	  'User-Agent'=>'Faraday v2.3.0'
            }).
          to_return(status: 200, body: json_response, headers: {})
-    visit "/users/#{@user_1.id}/movies/278/viewing-party/new"
+    visit "/movies/278/viewing-party/new"
 
     fill_in :duration, with: 150
     fill_in :start_time, with: "2022-05-13 17:39:57.273645"

@@ -12,7 +12,7 @@ RSpec.describe "new viewing party page" do
        	  'User-Agent'=>'Faraday v2.3.0'
            }).
          to_return(status: 200, body: json_response, headers: {})
-    visit "/users/#{user_1.id}/movies/278"
+    visit "/movies/278"
     expect(page).to have_button("Create Viewing Party")
     expect(page).to have_link("Discover Page")
 

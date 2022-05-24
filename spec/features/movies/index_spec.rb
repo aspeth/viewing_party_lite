@@ -12,10 +12,10 @@ RSpec.describe "discover movies page" do
            })
          .to_return(status: 200, body: json_response, headers: {})
     user_1 = User.create!(name: "Twitch", email: "twitch@dogmail.com", password: "password", password_confirmation: "password")
-    visit "/users/#{user_1.id}/discover"
+    visit "/discover"
 
     click_link "Discover Top Rated Movies"
-    expect(current_path).to eq("/users/#{user_1.id}/movies")
+    expect(current_path).to eq("/movies")
   end
 
   it "has a section to search by movie title" do
@@ -30,7 +30,7 @@ RSpec.describe "discover movies page" do
         .to_return(status: 200, body: json_response, headers: {})
 
     user_1 = User.create!(name: "Twitch", email: "twitch@dogmail.com", password: "password", password_confirmation: "password")
-    visit "/users/#{user_1.id}/discover"
+    visit "/discover"
 
     expect(page).to have_field("Movie Title")
     fill_in "Movie Title", with: "Gabriel"

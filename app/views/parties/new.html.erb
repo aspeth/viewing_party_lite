@@ -1,5 +1,5 @@
 <h3>Create A Party</h3>
-<%= form_with url: "/users/#{params[:user_id]}/movies/#{@movie.id}/viewing-party", method: :create do |f| %>
+<%= form_with url: "/movies/#{@movie.id}/viewing-party", method: :create do |f| %>
   <%= f.label "Duration:" %>
   <%= f.number_field :duration, in: @movie.runtime.to_i..10080, value: @movie.runtime %></br>
   <%= f.label "Starts At" %>

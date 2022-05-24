@@ -9,10 +9,10 @@ Rails.application.routes.draw do
   post '/users', to: 'users#create'
 
   get '/dashboard', to: 'users#show', as: :users_dashboard
-  get '/users/:user_id/movies/:id/viewing-party/new', to: 'parties#new'
-  get '/users/:user_id/movies/:id', to: 'movies#details'
-  get '/users/:id/movies', to: 'movies#results'
-  get '/users/:id/discover', to: 'movies#index'
-  post '/users/:user_id/movies/:id/viewing-party', to: 'parties#create'
+  get '/movies/:id/viewing-party/new', to: 'parties#new'
+  get '/movies/:id', to: 'movies#details'
+  get '/movies', to: 'movies#results'
+  get '/discover', to: 'movies#index'
+  post '/movies/:id/viewing-party', to: 'parties#create'
 
 end

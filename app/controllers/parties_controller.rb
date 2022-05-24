@@ -19,7 +19,7 @@ private
   def party_params
     # params.permit(:id, :user_id, :start_time, :duration, :invite_users)
     {
-      host_id: params[:user_id],
+      host_id: current_user[:id],
       date: params[:start_time],
       duration: params[:duration],
       movie_id: params[:id]
