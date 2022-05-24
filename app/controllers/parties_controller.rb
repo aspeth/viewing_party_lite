@@ -2,8 +2,12 @@ class PartiesController < ApplicationController
 
   def new
     movie_facade = MovieFacade.new
-    @movie = movie_facade.search_by_id(params[:id])
     @users = User.all
+    @movie = movie_facade.search_by_id(params[:id])
+    if current_user.nil?
+      flash[:error] = "Please log in to create parties"
+      redirect_to "/movies/#{@movie.id}"
+    end
   end
 
   def create

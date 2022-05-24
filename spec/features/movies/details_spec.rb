@@ -32,4 +32,23 @@ RSpec.describe "new viewing party page" do
     expect(page).to have_content("Content: First time seeing this in probably close to 20 years, maybe longer. Forgot how excellent of a movie this was, amazing all around from the performances, Morgan Freeman and Tim Robbins especially, with a roller coaster of emotions. The writing (from Stephen King's novel) direction from Frank Darabont was precise and just all around fantastic. This is the very rare 5 star movies I've given but it is easily one of the best movies, right up there in my book with The Godfather. **5.0/5**") # Last review's details
 
   end
+
+  it "visitors can't create parties" do
+    json_response = File.read("./spec/fixtures/shawshank.json")
+    user_1 = User.create!(name: "Twitch", email: "twitch@dogmail.com", password: "password", password_confirmation: "password")
+    stub_request(:get, "https://api.themoviedb.org/3/movie/278?api_key=131d23d3e9d511ff6fce6fdc6799d9be&append_to_response=credits,reviews").
+         with(
+           headers: {
+       	  'Accept'=>'*/*',
+       	  'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
+       	  'User-Agent'=>'Faraday v2.3.0'
+           }).
+         to_return(status: 200, body: json_response, headers: {})
+    visit "/movies/278"
+
+    click_button "Create Viewing Party"
+
+    expect(current_path).to eq("/movies/278")
+    expect(page).to have_content("Please log in to create parties")
+  end
 end
