@@ -88,4 +88,13 @@ RSpec.describe "landing page" do
     expect(page).to have_button("Create New User")
     expect(page).to_not have_link("Log Out")
   end
+
+  it "visitors don't see users" do
+    user_1 = User.create!(name: "Twitch", email: "twitch@dogmail.com", password: "password", password_confirmation: "password")
+    user_2 = User.create!(name: "Carl", email: "carl@catmail.com", password: "password", password_confirmation: "password")
+    visit '/'
+
+    expect(page).to_not have_content("Twitch")
+    expect(page).to_not have_content("Carl")
+  end
 end
